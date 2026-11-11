@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tutorial/home.dart';
+//import 'package:tutorial/userform.dart';
 //import 'package:tutorial/exc/strawberry.dart' show MyWidget;
 //import 'package:tutorial/exc/textlayout.dart';
 //import 'package:tutorial/home.dart';
-import 'package:tutorial/main1.dart';
+//import 'package:tutorial/main1.dart';
+//import 'package:tutorial/userinput.dart';
 //import 'package:tutorial/shop.dart';
 //import 'package:tutorial/shop2.dart';
 
@@ -36,7 +39,7 @@ void main() {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const Main1(),
+      home: const  MyWidget1(),
     );
   }
 }
