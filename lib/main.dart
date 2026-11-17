@@ -1,30 +1,28 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_auth_profile/bloc/cart/bloc/cart_bloc_bloc.dart';
+import 'package:flutter_bloc_auth_profile/bloc/login/bloc/product_bloc.dart';
+//import 'package:flutter_bloc_auth_profile/bloc/cart/bloc/cart_bloc_bloc.dart';
+import 'package:flutter_bloc_auth_profile/repo/productrepo.dart';
+import 'package:flutter_bloc_auth_profile/ui/productlist.dart';
 import 'core/constants/app_constants.dart';
 import 'core/theme/app_theme.dart';
 import 'data/repositories/auth_repository.dart';
 import 'data/repositories/profile_repository.dart';
 import 'firebase_options.dart';
 import 'presentation/blocs/auth/auth_bloc.dart';
-import 'presentation/blocs/auth/auth_event.dart';
 import 'presentation/blocs/auth/auth_state.dart';
-import 'presentation/blocs/profile/profile_bloc.dart';
-import 'presentation/blocs/register/register_bloc.dart';
-import 'presentation/screens/login_screen.dart';
 import 'presentation/screens/profile_screen.dart';
-import 'presentation/screens/register_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase when real keys are configured in firebase_options.dart
   if (DefaultFirebaseOptions.isConfigured) {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
   }
-
   final authRepository = AuthRepository();
   final profileRepository = ProfileRepository();
 
@@ -50,40 +48,29 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<AuthRepository>.value(value: authRepository),
         RepositoryProvider<ProfileRepository>.value(value: profileRepository),
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<AuthBloc>(
-            create: (_) => AuthBloc(authRepository: authRepository)
-              ..add(const CheckAuthStatusEvent()),
+          BlocProvider<ProductBloc>(
+            create: (_) =>
+                ProductBloc(ProductRepository())..add(LoadProductEvent()),
           ),
-          BlocProvider<RegisterBloc>(
-            create: (_) => RegisterBloc(authRepository: authRepository),
-          ),
-          BlocProvider<ProfileBloc>(
-            create: (_) => ProfileBloc(profileRepository: profileRepository),
+          BlocProvider<CartBlocBloc>(
+            create: (_) => CartBlocBloc(),
           ),
         ],
         child: MaterialApp(
           title: AppConstants.appName,
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
-          home: const AuthGate(),
-          routes: {
-            AppConstants.loginRoute: (_) => const LoginScreen(),
-            AppConstants.registerRoute: (_) => const RegisterScreen(),
-            AppConstants.profileRoute: (_) => const ProfileScreen(),
-          },
+          home: const ProductListPage(),
         ),
       ),
     );
   }
 }
 
-/// Checks initial authentication status on app startup and directs the user
-/// to either [ProfileScreen] (if already logged in) or [LoginScreen].
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
 
@@ -94,7 +81,7 @@ class AuthGate extends StatelessWidget {
         if (state is UserLoggedInState) {
           return const ProfileScreen();
         }
-        return const LoginScreen();
+        return const ProductListPage();
       },
     );
   }

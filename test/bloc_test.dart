@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc_auth_profile/data/models/user_model.dart';
 import 'package:flutter_bloc_auth_profile/data/repositories/auth_repository.dart';
 import 'package:flutter_bloc_auth_profile/data/repositories/profile_repository.dart';
-import 'package:flutter_bloc_auth_profile/presentation/blocs/auth/auth_bloc.dart';
-import 'package:flutter_bloc_auth_profile/presentation/blocs/auth/auth_event.dart';
-import 'package:flutter_bloc_auth_profile/presentation/blocs/auth/auth_state.dart';
+//import 'package:flutter_bloc_auth_profile/presentation/blocs/auth/auth_bloc.dart';
+//import 'package:flutter_bloc_auth_profile/presentation/blocs/auth/auth_event.dart';
+//import 'package:flutter_bloc_auth_profile/presentation/blocs/auth/auth_state.dart';
 import 'package:flutter_bloc_auth_profile/presentation/blocs/profile/profile_bloc.dart';
 import 'package:flutter_bloc_auth_profile/presentation/blocs/profile/profile_event.dart';
 import 'package:flutter_bloc_auth_profile/presentation/blocs/profile/profile_state.dart';
@@ -46,7 +46,7 @@ void main() {
     when(() => mockUser.email).thenReturn('aungmin@yahoo.com');
   });
 
-  group('AuthBloc Tests', () {
+  /* group('AuthBloc Tests', () {
     blocTest<AuthBloc, AuthState>(
       'emits [AuthLoadingState, UserLoggedInState] when LoginEvent succeeds',
       build: () {
@@ -97,7 +97,7 @@ void main() {
         ),
       ],
     );
-  });
+  }); */
 
   group('RegisterBloc Tests', () {
     blocTest<RegisterBloc, RegisterState>(

@@ -27,7 +27,7 @@ class AuthRepository {
       updatedAt: DateTime(2026, 1, 1),
     ),
   };
-
+ 
   AuthRepository({
     FirebaseAuth? firebaseAuth,
     FirebaseFirestore? firestore,
