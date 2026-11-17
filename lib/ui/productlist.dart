@@ -38,13 +38,33 @@ class _ProductListPageState extends State<ProductListPage> {
         elevation: 0,
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: const Text(
-          'Discover Products',
-          style: TextStyle(
-            color: Color(0xFF1E293B),
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-          ),
+       title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ShaderMask(
+              shaderCallback: (bounds) => const LinearGradient(
+                colors: [Color(0xFF1E293B), Color(0xFF2563EB)],
+              ).createShader(bounds),
+              child: const Text(
+                'Discover Products',
+                style: TextStyle(
+                  color: Colors.white, // Required for ShaderMask
+                  fontWeight: FontWeight.w800,
+                  fontSize: 22,
+                  letterSpacing: -0.5,
+                ),
+              ),
+            ),
+            const Text(
+              'Curated collections just for you',
+              style: TextStyle(
+                color: Color(0xFF64748B),
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
         actions: [
           Builder(
@@ -202,6 +222,7 @@ class _ProductListPageState extends State<ProductListPage> {
                       fontWeight:
                           isSelected ? FontWeight.w600 : FontWeight.normal,
                     ),
+                   
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                       side: BorderSide.none,
@@ -240,12 +261,17 @@ class _ProductCardState extends State<_ProductCard> {
         transform: Matrix4.translationValues(0, _isHovered ? -4 : 0, 0),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: Colors.blue.shade300,
+            width: 1.5,
+          ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: _isHovered ? 0.08 : 0.03),
-              blurRadius: _isHovered ? 16 : 8,
-              offset: const Offset(0, 4),
+              color: Colors.blue.withValues(alpha: 0.18),
+              blurRadius: 12,
+              spreadRadius: 1,
+              offset: const Offset(0, 6),
             ),
           ],
         ),
